@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lease Decoder | First &amp; Last</title>
+  <meta name="description" content="Paste your NYC lease and see which clauses conflict with New York law. Runs privately in your browser. Free.">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f5c45'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' font-weight='700' fill='%23f6f1e7' text-anchor='middle'%3EF%26L%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html">First <span class="amp">&amp;</span> Last</a>
+      <nav class="nav" aria-label="Main">
+        <a href="lease.html" aria-current="page">Lease Decoder</a>
+        <a href="deposit.html">Deposit Back</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="wrap narrow">
+        <div class="eyebrow">Moving in</div>
+        <h1>Lease Decoder</h1>
+        <p class="lede">Paste the text of your lease. The decoder checks it against New York State and New York City rules and shows you, in plain English, which clauses to question before you sign.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap narrow">
+        <div class="card">
+          <div class="field">
+            <label for="lease-text">Your lease text</label>
+            <span class="hint">Open the PDF, select all, copy, and paste here. Your lease is read by code running on this page only. It is never uploaded.</span>
+            <textarea id="lease-text" placeholder="Paste your lease here..."></textarea>
+          </div>
+          <p class="error-msg" id="lease-error" role="alert"></p>
+          <div class="btn-row">
+            <button class="btn" type="button" id="scan-btn">Decode my lease</button>
+            <button class="btn ghost" type="button" id="sample-btn">Try a sample lease</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div id="lease-results" class="hidden">
+      <section>
+        <div class="wrap narrow">
+          <h2 id="results-head" tabindex="-1">What we found</h2>
+          <div class="summary-bar" id="summary-bar"></div>
+          <div id="findings"></div>
+        </div>
+      </section>
+
+      <section class="band">
+        <div class="wrap narrow">
+          <h2>Riders and notices NYC leases should include</h2>
+          <p class="small">We searched your text for each of these. If you pasted only part of the lease, check the rest before assuming something is missing.</p>
+          <div id="riders"></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap narrow">
+          <h2>What a lease will not tell you</h2>
+          <ol class="steps">
+            <li><strong>Rent increases need advance notice.</strong> For an increase of 5% or more, or a non-renewal, the landlord owes you 30, 60, or 90 days of written notice depending on how long you have lived there. <a href="https://www.nysenate.gov/legislation/laws/RPP/226-C">RPL &sect; 226-c</a></li>
+            <li><strong>The landlord's broker cannot bill you.</strong> Since June 11, 2025, the FARE Act bars brokers who represent the landlord from charging the tenant, and every fee you owe must be disclosed in writing before signing. <a href="https://www.nyc.gov/site/dca/about/FAQ-Broker-Fees.page">NYC DCWP</a></li>
+            <li><strong>Unlawful clauses do not void the whole lease.</strong> A clause the law will not enforce is usually just ignored by a court. Flagging it before signing is still worth doing, because it tells you how carefully the landlord follows the rules.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap narrow">
+          <div class="card offer">
+            <span class="pill">Coming soon</span>
+            <h3>Move-In Kit</h3>
+            <div class="price">$15</div>
+            <ul>
+              <li>A ready-to-send email asking the landlord to fix each flagged clause, written from your results</li>
+              <li>A room-by-room photo checklist that protects your deposit when you move out</li>
+              <li>Calendar reminders for your renewal window and notice deadlines</li>
+            </ul>
+            <button class="btn" type="button" data-offer="move_in_kit_15" data-offer-name="The Move-In Kit ($15)">Get the kit</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section>
+      <div class="wrap narrow">
+        <p class="notice"><strong>Legal information, not legal advice.</strong> The decoder matches patterns in text. It can miss problems and it can flag clauses that are fine in context. Treat every result as a question to ask, not a conclusion. Primary sources: <a href="https://www.nysenate.gov/legislation/laws/RPP/238-A">RPL &sect; 238-a</a>, <a href="https://www.nysenate.gov/legislation/laws/GOB/7-108">GOL &sect; 7-108</a>, and the <a href="https://ag.ny.gov/publications/residential-tenants-rights-guide">NY Attorney General's Residential Tenants' Rights Guide</a>.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-back" id="offer-modal" role="dialog" aria-modal="true" aria-labelledby="offer-h">
+    <div class="modal">
+      <h3 id="offer-h"><span data-offer-title></span> is not live yet</h3>
+      <form>
+        <p>We are gauging interest before we build this. Leave your email and you will be the first to hear if it launches, at the price shown. One email, no spam, and nothing is charged.</p>
+        <div class="field"><label for="offer-email">Email</label><input type="email" id="offer-email" required placeholder="you@example.com"></div>
+        <div class="btn-row"><button class="btn" type="submit">Notify me</button><button class="btn ghost" type="button" data-close>Not now</button></div>
+      </form>
+      <div data-offer-thanks class="hidden">
+        <p><strong>Thank you.</strong> You are on the list.</p>
+        <div class="btn-row"><button class="btn" type="button" data-close>Back to my results</button></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p><strong>First &amp; Last</strong> is an independent project built in New York City. Legal information only, not legal advice. Nothing you paste on this page is uploaded or stored on a server.</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script src="js/lease.js"></script>
+</body>
+</html>

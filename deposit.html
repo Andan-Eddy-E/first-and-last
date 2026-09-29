@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deposit Back | First &amp; Last</title>
+  <meta name="description" content="Find out whether your NY landlord missed the 14-day security deposit deadline and generate a demand letter citing the statute. Free and private.">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f5c45'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' font-weight='700' fill='%23f6f1e7' text-anchor='middle'%3EF%26L%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html">First <span class="amp">&amp;</span> Last</a>
+      <nav class="nav" aria-label="Main">
+        <a href="lease.html">Lease Decoder</a>
+        <a href="deposit.html" aria-current="page">Deposit Back</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="wrap narrow">
+        <div class="eyebrow">Moving out</div>
+        <h1>Deposit Back</h1>
+        <p class="lede">Most New York landlords have 14 days after you move out to return your deposit with an itemized statement. Answer a few questions to see where you stand and get a letter you can send today.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap narrow">
+        <form id="deposit-form" class="card" novalidate>
+          <fieldset>
+            <legend><span class="step-num">1</span>The timeline</legend>
+            <div class="fields">
+              <div class="field">
+                <label for="moveOut">Date you moved out</label>
+                <input type="date" id="moveOut" required>
+                <span class="hint">The day you returned the keys or fully vacated.</span>
+              </div>
+              <div class="field">
+                <label for="unitType">Type of apartment</label>
+                <select id="unitType">
+                  <option value="market">Market rate (not rent regulated)</option>
+                  <option value="stabilized">Rent stabilized</option>
+                  <option value="controlled">Rent controlled</option>
+                  <option value="unsure">Not sure</option>
+                </select>
+              </div>
+              <div class="field full">
+                <label for="statement">Did the landlord send an itemized statement of deductions?</label>
+                <select id="statement">
+                  <option value="none">No statement at all</option>
+                  <option value="ontime">Yes, within 14 days of move-out</option>
+                  <option value="late">Yes, but more than 14 days after move-out</option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend><span class="step-num">2</span>The money</legend>
+            <div class="fields">
+              <div class="field">
+                <label for="deposit">Security deposit you paid ($)</label>
+                <input type="number" id="deposit" min="0" step="0.01" inputmode="decimal" required>
+              </div>
+              <div class="field">
+                <label for="returned">Amount returned so far ($)</label>
+                <input type="number" id="returned" min="0" step="0.01" inputmode="decimal" value="0">
+              </div>
+              <div class="field">
+                <label for="rent">Monthly rent ($) <span class="hint">optional</span></label>
+                <input type="number" id="rent" min="0" step="0.01" inputmode="decimal">
+                <span class="hint">Lets us check the one-month deposit cap.</span>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend><span class="step-num">3</span>Names for the letter <span class="hint">optional, stays in your browser</span></legend>
+            <div class="fields">
+              <div class="field"><label for="tenantName">Your name</label><input type="text" id="tenantName" autocomplete="name"></div>
+              <div class="field"><label for="landlordName">Landlord or management company</label><input type="text" id="landlordName"></div>
+              <div class="field full"><label for="tenantAddr">Your current mailing address</label><input type="text" id="tenantAddr" autocomplete="street-address" placeholder="Where the check should be sent"></div>
+              <div class="field full"><label for="landlordAddr">Landlord's mailing address</label><input type="text" id="landlordAddr"></div>
+              <div class="field full"><label for="rentalAddr">Address of the apartment you rented</label><input type="text" id="rentalAddr" placeholder="Street, unit, borough, ZIP"></div>
+            </div>
+          </fieldset>
+
+          <p class="error-msg" id="form-error" role="alert"></p>
+          <div class="btn-row">
+            <button class="btn" type="submit">Show me where I stand</button>
+            <button class="btn ghost" type="button" id="demo-btn">Fill in an example</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <div id="results" class="hidden">
+      <section>
+        <div class="wrap narrow">
+          <div id="verdict" class="card verdict" tabindex="-1"></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap">
+          <h2>Your timeline</h2>
+          <div class="card timeline-box" id="timeline"></div>
+        </div>
+      </section>
+
+      <section id="letter-section">
+        <div class="wrap narrow">
+          <h2>Your letter</h2>
+          <p class="small">Click into the letter to edit anything. Send it by certified mail with return receipt and keep a copy. Email a copy too if you have the landlord's address.</p>
+          <div class="btn-row" style="margin-bottom:14px">
+            <button class="btn small" type="button" id="copy-btn">Copy</button>
+            <button class="btn small ghost" type="button" id="download-btn">Download .txt</button>
+            <button class="btn small ghost" type="button" id="print-btn">Print or save as PDF</button>
+          </div>
+          <div id="letter" class="letter" contenteditable="true" spellcheck="true" aria-label="Your demand letter, editable"></div>
+        </div>
+      </section>
+
+      <section class="band">
+        <div class="wrap narrow">
+          <h2>What happens next</h2>
+          <ol class="steps" id="next-steps"></ol>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap">
+          <h2>Want us to handle the follow-through?</h2>
+          <p class="lede">The letter is free. These are the steps where most people stall.</p>
+          <div class="grid-2" style="margin-top:20px">
+            <div class="card offer">
+              <span class="pill">Coming soon</span>
+              <h3>Certified Mail, Sent For You</h3>
+              <div class="price">$19</div>
+              <ul>
+                <li>We print and mail your letter by USPS Certified Mail</li>
+                <li>Tracking number and delivery proof emailed to you</li>
+                <li>A dated copy for your small claims file</li>
+              </ul>
+              <button class="btn" type="button" data-offer="certified_mail_19" data-offer-name="Certified Mail, Sent For You ($19)">Send it for me</button>
+            </div>
+            <div class="card offer">
+              <span class="pill">Coming soon</span>
+              <h3>Small Claims Packet</h3>
+              <div class="price">$39</div>
+              <ul>
+                <li>Filing walkthrough for your borough, with your facts filled in</li>
+                <li>Evidence checklist and a one-page timeline exhibit</li>
+                <li>A short script for what to say at the hearing</li>
+              </ul>
+              <button class="btn" type="button" data-offer="small_claims_39" data-offer-name="Small Claims Packet ($39)">Get the packet</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section>
+      <div class="wrap narrow">
+        <p class="notice"><strong>Legal information, not legal advice.</strong> This tool applies general New York rules to the answers you give. It cannot see your lease or your full situation. Sources: <a href="https://www.nysenate.gov/legislation/laws/GOB/7-108">GOL &sect; 7-108</a>, <a href="https://www.nysenate.gov/legislation/laws/GOB/7-103">GOL &sect; 7-103</a>, the <a href="https://ag.ny.gov/publications/residential-tenants-rights-guide">NY Attorney General's Residential Tenants' Rights Guide</a>, and <a href="https://www.nycourts.gov/new-york-city-small-claims-court/nyc-small-claims-court-legal-information">NYC Small Claims Court</a>.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-back" id="offer-modal" role="dialog" aria-modal="true" aria-labelledby="offer-h">
+    <div class="modal">
+      <h3 id="offer-h"><span data-offer-title></span> is not live yet</h3>
+      <form>
+        <p>We are gauging interest before we build this. Leave your email and you will be the first to hear if it launches, at the price shown. One email, no spam, and nothing is charged.</p>
+        <div class="field"><label for="offer-email">Email</label><input type="email" id="offer-email" required placeholder="you@example.com"></div>
+        <div class="btn-row"><button class="btn" type="submit">Notify me</button><button class="btn ghost" type="button" data-close>Not now</button></div>
+      </form>
+      <div data-offer-thanks class="hidden">
+        <p><strong>Thank you.</strong> You are on the list. Your free letter above is ready to send in the meantime.</p>
+        <div class="btn-row"><button class="btn" type="button" data-close>Back to my letter</button></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p><strong>First &amp; Last</strong> is an independent project built in New York City. Legal information only, not legal advice. Nothing you enter on this page is uploaded or stored on a server.</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script src="js/deposit.js"></script>
+</body>
+</html>
